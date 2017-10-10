@@ -9,21 +9,21 @@ class Email
 {
     private $mail = \stdClass::class;
 
-    public function __construct()
+    public function __construct($smtpDebug, $host, $user, $pass, $smtpSecure, $port, $setFromEmail, $setFromName)
     {
         $this->mail = new PHPMailer(true);
-        $this->mail->SMTPDebug = 2;                                 // Enable verbose debug output
-        $this->mail->isSMTP();                                      // Set mailer to use SMTP
-        $this->mail->Host = 'mail.gustavoweb.me';  // Specify main and backup SMTP servers
-        $this->mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $this->mail->Username = 'sender@gustavoweb.me';                 // SMTP username
-        $this->mail->Password = 'teste@123';                           // SMTP password
-        $this->mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $this->mail->Port = 587;                                    // TCP port to connect to
+        $this->mail->SMTPDebug = $smtpDebug;                                  // Enable verbose debug output
+        $this->mail->isSMTP();                                                // Set mailer to use SMTP
+        $this->mail->Host = $host;                                            // Specify main and backup SMTP servers
+        $this->mail->SMTPAuth = true;                                         // Enable SMTP authentication
+        $this->mail->Username = $user;                                        // SMTP username
+        $this->mail->Password = $pass;                                        // SMTP password
+        $this->mail->SMTPSecure = $smtpSecure;                                // Enable TLS encryption, `ssl` also accepted
+        $this->mail->Port = $port;                                            // TCP port to connect to
         $this->mail->CharSet = 'utf-8';
         $this->mail->setLanguage('br');
         $this->mail->isHTML(true);
-        $this->mail->setFrom('gustavo@gustavoweb.me', 'Equipe GustavoWeb');
+        $this->mail->setFrom($setFromEmail, $setFromName);
     }
 
     public function sendMail($subject, $body, $replyEmail, $replyName, $addressEmail, $addressName)
